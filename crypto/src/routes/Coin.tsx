@@ -19,10 +19,16 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
+  position: relative;
   height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const BackBtn = styled.span`
+  position: absolute;
+  left: 0;
+  font-size: 28px;
 `;
 const Title = styled.h1`
   font-size: 48px;
@@ -135,11 +141,9 @@ interface PriceData {
     };
   };
 }
-interface ICoinProps {
-  isDark: boolean;
-}
+interface ICoinProps {}
 
-function Coin({ isDark }: ICoinProps) {
+function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RoutesState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -187,6 +191,9 @@ function Coin({ isDark }: ICoinProps) {
         </title>
       </Helmet>
       <Header>
+        <Link to="/">
+          <BackBtn>👈🏻</BackBtn>
+        </Link>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
@@ -232,7 +239,7 @@ function Coin({ isDark }: ICoinProps) {
 
           <Switch>
             <Route path={`/:coinId/chart`}>
-              <Chart coinId={coinId} isDark={isDark}/>
+              <Chart coinId={coinId} />
             </Route>
             <Route path={`/:coinId/price`}>
               <Price />
